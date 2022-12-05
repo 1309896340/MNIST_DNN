@@ -16,16 +16,24 @@ class activator:
         '''
         描述：
             对参数进行高斯分布随机初始化
-            对不同的激活函数，不同的sigma
+            对不同的激活函数,不同的sigma
         '''
         pass
 
     @abstractmethod
     def activate(self, x):
+        '''
+        描述：
+            对线性运算的输出值进行激活
+        '''
         pass
 
     @abstractmethod
     def grad(self, y):
+        '''
+        描述：
+            根据激活后的输出值计算梯度
+        '''
         pass
 
 
