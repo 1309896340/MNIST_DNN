@@ -164,7 +164,6 @@ def gauss_normalize(imgs):
 
 # 进行onehot编码(平滑处理)
 labelmap = torch.eye(10, device=device) * 0.998 + 0.001
-# labelmap = torch.eye(10, device=device)
 
 def onehot(labels):
     '''
