@@ -94,21 +94,23 @@ if __name__ == '__main__':
             # 将真实标签onthot处理，得到(batchsize,10,1)的张量
             onehot_batch_labels = onehot(batch_labels)
 
-            # 评估一个batch的损失值，输出日志
+            # 评估一个batch上的损失值，输出日志
             loss = cross_entropy_loss(output, onehot_batch_labels)
             loss_log.append(loss)
 
             # 根据标签值计算反向传播
             m.backward(onehot_batch_labels)
 
-            # 在验证集上进行测试
+            # 在验证集上进行测试(向前传播、输出概率分布映射为预测标签、标签onehot编码)
             prd = m.forward(valid_images)
             prd_labels = torch.argmax(prd, axis=1).squeeze()
             onehot_valid_labels = onehot(valid_labels)
+
+            # 计算损失值，输出日志
             valid_loss = cross_entropy_loss(prd, onehot_valid_labels)
             validloss_log.append(valid_loss)
-            
-            # 评估经过一个batch后在验证集上的准确率，输出日志
+
+            # 计算准确率，输出日志
             accuracy = torch.sum(torch.where(valid_labels == prd_labels, 1, 0)).item() / len(valid_labels)
             accuracy_log.append(accuracy)
 
