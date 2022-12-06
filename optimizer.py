@@ -11,9 +11,9 @@ class AdamOptimizer:
             grad_size: list, tuple
                 待优化参数的梯度矩阵形状
             alpha: float
-                动量因子
+                衰减因子β1
             rho: float
-                衰减因子
+                衰减因子β2
             sigma: float
                 避免除以0的小数值
         示例：

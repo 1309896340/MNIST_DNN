@@ -13,7 +13,7 @@ np.set_printoptions(threshold=10000, linewidth=200)
 
 def test():
 
-    logtime = "2022_12_04_16_46_31"
+    logtime = "2022_12_05_21_22_08"
 
     with open(f"log/{logtime}.model", "rb") as fp:
 

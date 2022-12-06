@@ -46,7 +46,7 @@ if __name__ == '__main__':
     atexit.register(log_output)
 
     # 参数集中管理
-    param = {"lr": 0.00001, "epoch": 400, "batchsize": 400, "train_rate": 0.8, "dropratio": 0.85}
+    param = {"lr": 0.00002, "epoch": 40, "batchsize": 300, "train_rate": 0.8, "dropratio": 0.85}
 
     # 加载数据集
     data_images, data_labels, n = load_data(fimg="MNIST/train-images-idx3-ubyte.gz", flab="MNIST/train-labels-idx1-ubyte.gz")
@@ -68,9 +68,9 @@ if __name__ == '__main__':
 
     # 创建模型，设置学习率，添加网络层
     m = MyModel(lr=param['lr'])
-    m.addLayer(784, 1024, activator=leakyRelu)
-    m.addLayer(1024, 1024, activator=leakyRelu)
-    m.addLayer(1024, 512, activator=leakyRelu)
+    m.addLayer(784, 1024, activator=tanh)
+    m.addLayer(1024, 1024, activator=tanh)
+    m.addLayer(1024, 512, activator=tanh)
     m.addLayer(512, 256, activator=sigmoid)
     m.addLayer(256, 10, activator=softmax_crosentropy)
 
