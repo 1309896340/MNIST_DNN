@@ -46,7 +46,7 @@ if __name__ == '__main__':
     atexit.register(log_output)
 
     # 参数集中管理
-    param = {"lr": 0.00002, "epoch": 200, "batchsize": 300, "train_rate": 0.8, "dropratio": 0.95}
+    param = {"lr": 0.00002, "epoch": 500, "batchsize": 300, "train_rate": 0.8, "dropratio": 0.95}
 
     # 加载数据集
     data_images, data_labels, n = load_data(fimg="MNIST/train-images-idx3-ubyte.gz", flab="MNIST/train-labels-idx1-ubyte.gz")
