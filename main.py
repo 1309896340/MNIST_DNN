@@ -84,14 +84,14 @@ if __name__ == '__main__':
         print(f"======================开始第{i+1}轮===========================")
         for k in range(batchnum):
             # 取出一个batch的图片和标签
-            batch_imags = train_images[k * batchsize : (k + 1) * batchsize]
-            batch_labels = train_labels[k * batchsize : (k + 1) * batchsize]
+            batch_imags = train_images[k * batchsize : (k + 1) * batchsize]     # (400, 784, 1)
+            batch_labels = train_labels[k * batchsize : (k + 1) * batchsize]    # (400)
 
             # 输入样本，向前传播，输出形状为(batchsize,10,1)的张量
-            output = m.forward(batch_imags, dropout=True, dropratio=param['dropratio'])
+            output = m.forward(batch_imags, dropout=True, dropratio=param['dropratio'])     # (400, 10, 1)
 
             # 将真实标签onthot处理，得到(batchsize,10,1)的张量
-            onehot_batch_labels = onehot(batch_labels)
+            onehot_batch_labels = onehot(batch_labels)     # (400, 10, 1)
 
             # 评估一个batch上的损失值，输出日志
             loss = cross_entropy_loss(output, onehot_batch_labels)
@@ -101,9 +101,9 @@ if __name__ == '__main__':
             m.backward(onehot_batch_labels)
 
             # 在验证集上进行测试(向前传播、输出概率分布映射为预测标签、标签onehot编码)
-            prd = m.forward(valid_images)
-            prd_labels = torch.argmax(prd, axis=1).squeeze()
-            onehot_valid_labels = onehot(valid_labels)
+            prd = m.forward(valid_images)     # (12000, 10, 1)
+            prd_labels = torch.argmax(prd, axis=1).squeeze()     # (12000)
+            onehot_valid_labels = onehot(valid_labels)     # (12000, 10, 1)
 
             # 计算损失值，输出日志
             valid_loss = cross_entropy_loss(prd, onehot_valid_labels)

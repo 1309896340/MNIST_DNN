@@ -129,7 +129,7 @@ def data_shuffle(images, labels):
 def normalize(imgs):
     '''
     描述：
-        对图片(批量)进行归一化
+        对图片(批量)归一化到[0,1]
     参数：
         imgs: torch.Tensor
         形状为(图片数, ...)的
@@ -140,7 +140,7 @@ def normalize(imgs):
 def center_normalize(imgs):
     '''
     描述：
-        对图片(批量)进行归一化
+        对图片(批量)归一化到[1,1]
     参数：
         imgs: torch.Tensor
         形状为(图片数, ...)的
@@ -151,7 +151,7 @@ def center_normalize(imgs):
 def gauss_normalize(imgs):
     '''
     描述：
-        对图片(批量)进行归一化
+        对图片(批量)归一化,减均值除以标准差
     参数：
         imgs: torch.Tensor
             形状为(batchsize, ...)
