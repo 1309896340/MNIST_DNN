@@ -1,3 +1,4 @@
+from abc import abstractmethod
 import pickle
 import numpy as np
 
@@ -24,7 +25,7 @@ accuracy_log = []
 def log_output():
     '''
     描述：
-        程序结束时自动导出损失值和准确率
+        导出损失值和准确率
     '''
     np.save(f"log/loss_{t}.npy", np.array(loss_log))
     np.save(f"log/validloss_{t}.npy", np.array(validloss_log))
@@ -45,7 +46,7 @@ if __name__ == '__main__':
     atexit.register(log_output)
 
     # 参数集中管理
-    param = {"lr": 0.00001, "epoch": 400, "batchsize": 400, "train_rate": 0.8, "dropratio": 0.85}
+    param = {"lr": 0.00002, "epoch": 40, "batchsize": 300, "train_rate": 0.8, "dropratio": 0.95}
 
     # 加载数据集
     data_images, data_labels, n = load_data(fimg="MNIST/train-images-idx3-ubyte.gz", flab="MNIST/train-labels-idx1-ubyte.gz")
@@ -84,14 +85,14 @@ if __name__ == '__main__':
         print(f"======================开始第{i+1}轮===========================")
         for k in range(batchnum):
             # 取出一个batch的图片和标签
-            batch_imags = train_images[k * batchsize : (k + 1) * batchsize]     # (batchsize, 784, 1)
-            batch_labels = train_labels[k * batchsize : (k + 1) * batchsize]    # (batchsize)
+            batch_imags = train_images[k * batchsize : (k + 1) * batchsize]
+            batch_labels = train_labels[k * batchsize : (k + 1) * batchsize]
 
             # 输入样本，向前传播，输出形状为(batchsize,10,1)的张量
-            output = m.forward(batch_imags, dropout=True, dropratio=param['dropratio'])     # (batchsize, 10, 1)
+            output = m.forward(batch_imags, dropout=True, dropratio=param['dropratio'])
 
             # 将真实标签onthot处理，得到(batchsize,10,1)的张量
-            onehot_batch_labels = onehot(batch_labels)     # (batchsize, 10, 1)
+            onehot_batch_labels = onehot(batch_labels)
 
             # 评估一个batch上的损失值，输出日志
             loss = cross_entropy_loss(output, onehot_batch_labels)
@@ -101,9 +102,9 @@ if __name__ == '__main__':
             m.backward(onehot_batch_labels)
 
             # 在验证集上进行测试(向前传播、输出概率分布映射为预测标签、标签onehot编码)
-            prd = m.forward(valid_images)     # (12000, 10, 1)
-            prd_labels = torch.argmax(prd, axis=1).squeeze()     # (12000)
-            onehot_valid_labels = onehot(valid_labels)     # (12000, 10, 1)
+            prd = m.forward(valid_images)
+            prd_labels = torch.argmax(prd, axis=1).squeeze()
+            onehot_valid_labels = onehot(valid_labels)
 
             # 计算损失值，输出日志
             valid_loss = cross_entropy_loss(prd, onehot_valid_labels)
