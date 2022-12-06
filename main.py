@@ -1,4 +1,3 @@
-from abc import abstractmethod
 import pickle
 import numpy as np
 
@@ -25,7 +24,7 @@ accuracy_log = []
 def log_output():
     '''
     描述：
-        导出损失值和准确率
+        程序结束时自动导出损失值和准确率
     '''
     np.save(f"log/loss_{t}.npy", np.array(loss_log))
     np.save(f"log/validloss_{t}.npy", np.array(validloss_log))
